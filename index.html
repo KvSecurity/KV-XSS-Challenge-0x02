@@ -1,0 +1,45 @@
+
+
+<button onclick="magic();">Click here to see the magic!</button>
+<script type="text/javascript">
+	function magic(){
+		window.location = window.location + '?source={"source":"https://kvsecurity.github.io/images/pic01.jpg"}';
+		}
+	function escape(input) {
+    	function extend(obj) {
+        	var source, prop;
+        	for (var i = 1, length = arguments.length; i < length; i++) {
+            source = arguments[i];
+            for (prop in source) {
+                obj[prop] = source[prop];
+            }
+        }
+        return obj;
+    }
+    
+    	try {
+        	
+        	var data = JSON.parse(input);
+        	var config = extend({
+            
+            source: 'http://placehold.it/350x150'
+        	}, JSON.parse(input));
+        	
+        	if (/[^\w:\/.]/.test(config.source)) {
+            delete config.source;
+        	}
+        	
+        	var source = config.source.replace(/"/g, '');
+        	
+        	return '<img src="{{source}}">'.replace('{{source}}', source);
+    } catch (e) {
+        return 'Invalid image data.';
+    }
+}
+var url_string = window.location.href; 
+var url = new URL(url_string);
+var image_source = url.searchParams.get("source");
+
+document.write(escape(image_source));
+
+</script>
